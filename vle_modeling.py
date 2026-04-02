@@ -34,13 +34,12 @@ MARGULES = {
 
 
 def vapor_pressure(component: str, T_C: float) -> float:
-    """Antoine equation → vapor pressure in mmHg."""
+    """Antoine equatoin --> vapor pressure(Pvap) in mmhg"""
     c = ANTOINE[component]
     return 10 ** (c["A"] - c["B"] / (c["C"] + T_C))
 
 
 def activity_coefficients(x1: float, system: tuple, T_C: float = None) -> tuple:
-    """Margules two-suffix model activity coefficients."""
     if system not in MARGULES:
         return 1.0, 1.0
     A12, A21 = MARGULES[system]
@@ -52,7 +51,7 @@ def activity_coefficients(x1: float, system: tuple, T_C: float = None) -> tuple:
 
 def bubble_point_T(x1: float, comp1: str, comp2: str, P_mmHg: float = 760.0,
                     ideal: bool = True) -> float:
-    """Iterate to find bubble-point temperature at fixed P."""
+    """For finding bubblepoint temperature at const P"""
     system = (comp1, comp2)
 
     def residual(T):
@@ -69,7 +68,7 @@ def bubble_point_T(x1: float, comp1: str, comp2: str, P_mmHg: float = 760.0,
 
 def dew_point_T(y1: float, comp1: str, comp2: str, P_mmHg: float = 760.0,
                  ideal: bool = True) -> float:
-    """Iterate to find dew-point temperature at fixed P."""
+    """For Finding DEw-point temperature at consrt P"""
     system = (comp1, comp2)
 
     def residual(T):
@@ -78,7 +77,6 @@ def dew_point_T(y1: float, comp1: str, comp2: str, P_mmHg: float = 760.0,
         if ideal:
             return 1.0 - y1*P_mmHg/P1s - (1-y1)*P_mmHg/P2s
         else:
-            # estimate liquid composition iteratively
             x1_est = y1 * P_mmHg / P1s
             x1_est = max(1e-6, min(1-1e-6, x1_est))
             g1, g2 = activity_coefficients(x1_est, system, T)
@@ -128,7 +126,7 @@ def P_mmHg_from_y(y1, comp1, comp2, T_C, ideal, system):
         return 1.0/denom if denom > 0 else 760
 
 
-# ── Plotting ──────────────────────────────────────────────────────────────────
+# ── Plotting ─────────────────────────────*─*─*─*─*─*─*─*─*─*─**──────────────────────────*─
 
 def plot_all():
     plt.style.use("seaborn-v0_8-whitegrid")
