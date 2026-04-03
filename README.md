@@ -65,7 +65,7 @@ Solved using `scipy.optimize.brentq` (root-finding).
 ## Output
 
 `vle_results.png` — 4 plots:
-(/vle_plots.png)
+![](/vle_plots.png)
 1. T-xy diagram: Benzene–Toluene
 2. T-xy diagram: Ethanol–Water
 3. x-y equilibrium diagram (both systems)
